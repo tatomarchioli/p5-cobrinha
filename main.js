@@ -14,10 +14,11 @@ let map = {
     }
 };
 let mapLayer;
-let objLayer;
+let playerLayer;
 
 function setup() {
     //layers
+    //noCursor();
     frameRate(30);
 
     let bgLayer = new BackgroundLayer();
@@ -26,15 +27,17 @@ function setup() {
     mapLayer = new MapLayer();
     layers.push(mapLayer);
     
-    objLayer = new ObjectLayer();
-    layers.push(objLayer);
+    playerLayer = new PlayerLayer();
+    layers.push(playerLayer);
 
     //bg
     for(let i=0; i<180; i++){
         new Rock(bgLayer, i);
     }
     //objects
-    player = new Player(objLayer);
+    control = new Control(playerLayer);
+    player = new Player(playerLayer);
+    player.visible = true;
 
     createCanvas(windowWidth, windowHeight);
 }
@@ -57,7 +60,7 @@ function update() {
         layers[i].update();
     }
 
-    objLayer.spriteGroup.collide(mapLayer.collideGroup);
+    playerLayer.spriteGroup.collide(mapLayer.collideGroup);
 }
 
 function staticRender() {
@@ -66,8 +69,8 @@ function staticRender() {
 
 function render() {
     camera.zoom = 1;
-    camera.position.x = player.sprite.position.x;
-    camera.position.y = player.sprite.position.y;
+    camera.position.x = player.position.x;
+    camera.position.y = player.position.y;
     for(let i = 0; i < layers.length; i++){
         layers[i].draw();
         drawSprites(layers[i].spriteGroup);

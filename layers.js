@@ -72,7 +72,7 @@ function MapLayer() {
 }
 
 
-function ObjectLayer() {
+function PlayerLayer() {
     this.children = [];
     this.spriteGroup = new Group();
 
